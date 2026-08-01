@@ -1,8 +1,18 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import path from 'path';
 
+// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // <--- This ensures JavaScript imports use relative paths
-  // ... rest of your config
+  base: './', // Ensures relative asset paths for GitHub Pages / subfolder deployments
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: false,
+  },
 });
