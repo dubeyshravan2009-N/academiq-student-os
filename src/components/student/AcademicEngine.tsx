@@ -12,7 +12,7 @@ import {
   Award,
   BookOpen,
 } from 'lucide-react';
-import { MockMark, MockAttendance, MockSubmission } from '@/lib/mockData';
+import { MockMark, MockAttendance, MockSubmission } from '@/data/mockData';
 import { AttendanceStatus, SubmissionType, SubmissionStatus } from '@/lib/types';
 
 interface AcademicEngineProps {

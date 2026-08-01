@@ -12,7 +12,7 @@ import {
   Coffee,
   RefreshCw,
 } from 'lucide-react';
-import { MockTask, MockHabit } from '@/lib/mockData';
+import { MockTask, MockHabit } from '@/data/mockData';
 
 interface StudyPlannerProps {
   tasks: MockTask[];

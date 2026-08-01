@@ -12,7 +12,7 @@ import {
   ArrowDown,
   Sparkles,
 } from 'lucide-react';
-import { MockGoal, MockTask } from '@/lib/mockData';
+import { MockGoal, MockTask } from '@/data/mockData';
 import { GoalLevel, GoalStatus, TaskPriority } from '@/lib/types';
 import { Modal } from '@/components/ui/Modal';
 import { Spinner, EmptyState } from '@/components/ui/Feedback';
@@ -45,6 +45,7 @@ const priorityStyles: Record<TaskPriority, string> = {
   low: 'bg-ink-100 text-ink-600',
 };
 
+// Goal Tracker — manages the 3-tier goal cascade (long → mid → short) and their tasks
 export function GoalManager({
   goals,
   tasks,
@@ -69,12 +70,14 @@ export function GoalManager({
   const [taskModalGoalId, setTaskModalGoalId] = useState<string | null>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
+  // Opens the modal in "create new goal" mode with a blank form
   function openNew() {
     setEditingGoal(null);
     setForm({ title: '', description: '', level: 'short_term', target_date: '', priority: 'medium', parent_id: '' });
     setModalOpen(true);
   }
 
+  // Opens the modal in "edit existing goal" mode, pre-filled with the goal's data
   function openEdit(g: MockGoal) {
     setEditingGoal(g);
     setForm({
@@ -88,6 +91,7 @@ export function GoalManager({
     setModalOpen(true);
   }
 
+  // Saves the form — creates a new goal or updates an existing one depending on mode
   function save() {
     if (!form.title.trim()) return;
     setSaving(true);
@@ -109,11 +113,13 @@ export function GoalManager({
     setModalOpen(false);
   }
 
+  // Deletes a goal after confirmation (also cascades to its tasks via the parent handler)
   function handleDelete(g: MockGoal) {
     if (!confirm(`Delete "${g.title}" and its tasks?`)) return;
     onDeleteGoal(g.id);
   }
 
+  // Adds a standalone task under a specific goal
   function addTaskToGoal(goalId: string) {
     if (!newTaskTitle.trim()) return;
     onAddTask({
@@ -135,6 +141,7 @@ export function GoalManager({
   const goalsByParent = (parentId: string) => goals.filter((g) => g.parent_id === parentId);
   const tasksByGoal = (goalId: string) => tasks.filter((t) => t.goal_id === goalId);
 
+  // Recursively renders a goal card with its tasks and nested sub-goals
   function renderGoalCard(g: MockGoal, depth: number = 0) {
     const meta = levelMeta[g.level];
     const children = goalsByParent(g.id);

@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { useApp } from '@/lib/context';
 import { School, Profile, Student, Attendance } from '@/lib/types';
 import { StatCard } from '@/components/ui/StatCard';
+import { Sidebar } from '@/components/Sidebar';
 import { FullSpinner, EmptyState, Spinner } from '@/components/ui/Feedback';
 import { Building2, Users, GraduationCap, CheckCircle2, XCircle, Clock, Activity, ShieldCheck, Crown, KeyRound, Copy, Check, RefreshCw, Lock, ShieldAlert } from 'lucide-react';
 
@@ -135,13 +136,7 @@ export function SuperAdminDashboard() {
         <span className="badge bg-warning-50 text-warning-700"><ShieldCheck className="w-3.5 h-3.5" /> Founder Access</span>
       </div>
 
-      <div className="flex gap-1 rounded-xl bg-ink-100 p-1 overflow-x-auto">
-        {tabs.map((t) => (
-          <button key={t.id} onClick={() => setTab(t.id)} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${tab === t.id ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-700'}`}>
-            {t.icon} {t.label}
-          </button>
-        ))}
-      </div>
+      <Sidebar tabs={tabs} activeTab={tab} onTabChange={(id) => setTab(id as Tab)} />
 
       {tab === 'overview' && (
         <>

@@ -40,11 +40,13 @@ interface CareerEngineProps {
   adoptedGoals: string[];
 }
 
+// Main Career Engine — lets students discover careers via a questionnaire, then adopt matching careers as long-term goals
 export function CareerEngine({ onAdoptGoal, adoptedGoals }: CareerEngineProps) {
   const [step, setStep] = useState<'questionnaire' | 'results'>('questionnaire');
   const [selections, setSelections] = useState<Record<string, string[]>>({});
   const [expandedCareer, setExpandedCareer] = useState<string | null>(null);
 
+  // Toggles a questionnaire option on/off for a given question
   function toggleSelection(qid: string, optionLabel: string, tags: string[]) {
     setSelections((prev) => {
       const current = prev[qid] || [];
@@ -56,19 +58,23 @@ export function CareerEngine({ onAdoptGoal, adoptedGoals }: CareerEngineProps) {
     });
   }
 
+  // Checks if a specific option is currently selected for a question
   function isOptionSelected(qid: string, optionLabel: string): boolean {
     return (selections[qid] || []).includes(optionLabel);
   }
 
+  // Counts total selections across all questions (for the submit button)
   function getTotalSelections(): number {
     return Object.values(selections).reduce((sum, arr) => sum + arr.length, 0);
   }
 
+  // Moves to the results step and calculates career recommendations
   function handleSubmit() {
     setStep('results');
     setExpandedCareer(null);
   }
 
+  // Clears all selections and returns to the questionnaire step
   function handleReset() {
     setSelections({});
     setStep('questionnaire');

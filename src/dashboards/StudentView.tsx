@@ -14,14 +14,15 @@ import {
   createMockMarks,
   createMockAttendance,
   createMockSubmissions,
-} from '@/lib/mockData';
-import { CareerEngine } from '@/components/student/CareerEngine';
-import { GoalManager } from '@/components/student/GoalManager';
-import { HabitManager } from '@/components/student/HabitManager';
+} from '@/data/mockData';
+import { CareerEngine } from '@/modules/CareerEngine';
+import { GoalManager } from '@/modules/GoalTracker';
+import { HabitManager } from '@/modules/HabitManager';
 import { AcademicEngine } from '@/components/student/AcademicEngine';
 import { AIMentorDrawer } from '@/components/student/AIMentorDrawer';
 import { StudyPlanner } from '@/components/student/StudyPlanner';
 import { StatCard } from '@/components/ui/StatCard';
+import { Sidebar } from '@/components/Sidebar';
 import { Target, CheckCircle2, Flame, TrendingUp, Briefcase, BookOpen, Calendar, Clock } from 'lucide-react';
 
 type Tab = 'overview' | 'goals' | 'career' | 'habits' | 'academic' | 'planner';
@@ -166,20 +167,8 @@ export function StudentDashboard() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 rounded-xl bg-ink-100 p-1 overflow-x-auto">
-        {tabs.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
-              tab === t.id ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-700'
-            }`}
-          >
-            {t.icon} {t.label}
-          </button>
-        ))}
-      </div>
+      {/* Tab navigation */}
+      <Sidebar tabs={tabs} activeTab={tab} onTabChange={(id) => setTab(id as Tab)} />
 
       {tab === 'overview' && (
         <OverviewTab

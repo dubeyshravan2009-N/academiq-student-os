@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Sparkles, X, Send, Bot, User } from 'lucide-react';
-import { MockTask, MockHabit } from '@/lib/mockData';
+import { MockTask, MockHabit } from '@/data/mockData';
 
 interface Msg { role: 'ai' | 'user'; text: string; }
 

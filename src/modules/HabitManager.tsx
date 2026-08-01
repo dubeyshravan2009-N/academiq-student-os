@@ -15,7 +15,7 @@ import {
   Droplets,
   Apple,
 } from 'lucide-react';
-import { MockHabit } from '@/lib/mockData';
+import { MockHabit } from '@/data/mockData';
 import { Modal } from '@/components/ui/Modal';
 import { EmptyState } from '@/components/ui/Feedback';
 
@@ -48,6 +48,7 @@ function isToday(dateStr: string): boolean {
   return dateStr === today;
 }
 
+// Habit Manager — tracks daily habit check-ins, streaks, and a 12-week consistency grid
 export function HabitManager({ habits, onAddHabit, onToggleHabit, onDeleteHabit }: HabitManagerProps) {
   const [modalOpen, setModalOpen] = useState(false);
   const [form, setForm] = useState({
@@ -56,6 +57,7 @@ export function HabitManager({ habits, onAddHabit, onToggleHabit, onDeleteHabit 
     active_days: [1, 2, 3, 4, 5] as number[],
   });
 
+  // Toggles a day-of-week on/off in the new habit form's active days list
   function toggleDay(day: number) {
     setForm((prev) => ({
       ...prev,
@@ -65,6 +67,7 @@ export function HabitManager({ habits, onAddHabit, onToggleHabit, onDeleteHabit 
     }));
   }
 
+  // Creates a new habit with zeroed-out streak stats and resets the form
   function save() {
     if (!form.title.trim()) return;
     onAddHabit({
@@ -221,6 +224,7 @@ export function HabitManager({ habits, onAddHabit, onToggleHabit, onDeleteHabit 
   );
 }
 
+// Renders a single habit with its 12-week heatmap, streak counter, and check-in button
 function HabitCard({
   habit,
   onToggle,

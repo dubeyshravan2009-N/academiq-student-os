@@ -3,6 +3,7 @@ import { supabase } from '@/lib/supabase';
 import { useApp } from '@/lib/context';
 import { ClassRow, Profile, Student, Attendance, ActivityLog, TeacherClass, CURRENT_ACADEMIC_YEAR } from '@/lib/types';
 import { StatCard } from '@/components/ui/StatCard';
+import { Sidebar } from '@/components/Sidebar';
 import { FullSpinner, EmptyState, Spinner } from '@/components/ui/Feedback';
 import { Modal } from '@/components/ui/Modal';
 import { Users, GraduationCap, Building2, BarChart3, Plus, UserPlus, Calendar, ScrollText, Layers, Download, Upload, RotateCw, Check, X } from 'lucide-react';
@@ -283,13 +284,7 @@ export function SchoolAdminDashboard() {
         <StatCard label="Attendance" value={`${attPct}%`} icon={<Calendar className="w-5 h-5" />} tone="warning" />
       </div>
 
-      <div className="flex gap-1 rounded-xl bg-ink-100 p-1 overflow-x-auto">
-        {tabs.map((t) => (
-          <button key={t.id} onClick={() => setTab(t.id)} className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${tab === t.id ? 'bg-white text-ink-900 shadow-sm' : 'text-ink-500 hover:text-ink-700'}`}>
-            {t.icon} {t.label}
-          </button>
-        ))}
-      </div>
+      <Sidebar tabs={tabs} activeTab={tab} onTabChange={(id) => setTab(id as Tab)} />
 
       {tab === 'overview' && (
         <div className="card p-5">

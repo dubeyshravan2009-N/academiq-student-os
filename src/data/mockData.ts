@@ -1,3 +1,10 @@
+// =============================================================================
+// MOCK DATA — Edit this file to change demo student marks, habits, goals, etc.
+// Each create* function returns a fresh copy so components can mutate state freely.
+// To update default values (marks, habit defaults, teacher info), just edit the
+// objects returned by these functions — no other code changes needed.
+// =============================================================================
+
 import {
   GoalLevel,
   GoalStatus,
@@ -65,22 +72,26 @@ export interface MockSubmission {
   due_date: string;
 }
 
+// Generates a unique ID with a descriptive prefix (e.g. "t_1", "g_2")
 let idCounter = 0;
 function uid(prefix: string): string {
   idCounter += 1;
   return `${prefix}_${idCounter}`;
 }
 
+// Returns a date string N days from today (negative = past)
 function daysFromNow(n: number): string {
   const d = new Date();
   d.setDate(d.getDate() + n);
   return d.toISOString().slice(0, 10);
 }
 
+// Returns a date string N days ago
 function daysAgo(n: number): string {
   return daysFromNow(-n);
 }
 
+// Returns the initial set of 3-tier goals (long-term → mid-term → short-term)
 export function createMockGoals(): MockGoal[] {
   return [
     {
@@ -146,6 +157,7 @@ export function createMockGoals(): MockGoal[] {
   ];
 }
 
+// Returns tasks linked to short-term goals, plus standalone daily tasks
 export function createMockTasks(): MockTask[] {
   return [
     { id: uid('t'), goal_id: 'g_short_1', title: 'Watch OOP inheritance video lecture', is_completed: true, priority: 'high', deadline: daysFromNow(1), is_daily: false },
@@ -158,6 +170,7 @@ export function createMockTasks(): MockTask[] {
   ];
 }
 
+// Returns habits with realistic streak data — edit titles/emojis/days here
 export function createMockHabits(): MockHabit[] {
   const buildCheckIns = (days: number[]): string[] => {
     const result: string[] = [];
@@ -210,6 +223,7 @@ export function createMockHabits(): MockHabit[] {
   ];
 }
 
+// Returns exam marks across 5 subjects — edit scores here to test the UI
 export function createMockMarks(): MockMark[] {
   return [
     { id: uid('m'), subject: 'Mathematics', exam_name: 'Unit Test 1', exam_type: 'unit_test', score_obtained: 42, max_score: 50, date: daysAgo(40) },
@@ -225,6 +239,7 @@ export function createMockMarks(): MockMark[] {
   ];
 }
 
+// Returns ~45 days of attendance history (skips Sundays)
 export function createMockAttendance(): MockAttendance[] {
   const records: MockAttendance[] = [];
   const today = new Date();
@@ -240,6 +255,7 @@ export function createMockAttendance(): MockAttendance[] {
   return records;
 }
 
+// Returns pending and completed submissions for the submissions tracker
 export function createMockSubmissions(): MockSubmission[] {
   return [
     { id: uid('s'), type: 'homework', title: 'Math Problem Set 5', subject: 'Mathematics', status: 'pending', due_date: daysFromNow(2) },
