@@ -131,10 +131,11 @@ function AccessDenied({ allowed }: { allowed: string }) {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <AppProvider>
         <Shell />
       </AppProvider>
     </BrowserRouter>
   );
 }
+
